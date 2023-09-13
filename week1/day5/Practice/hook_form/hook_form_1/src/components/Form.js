@@ -1,145 +1,48 @@
-import React, {useState} from "react";
+import React from  'react';
 
-const UserForm = props =>{
-    const [firstName, setFirstName] = useState("");
-    const [firstNameError, setFirstNameError] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [lastNameError, setLastNameError] = useState("");
-    const [email, setEmail] = useState("");
-    const [emailError, setEmailError] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [hasSubmittedForm, setHasSubmittedForm] = useState(false);
-    const [confirmPasswordError, setConfirmPasswordError] = useState("");
-
-    function createUser(e){
-        e.preventDefault();
-        const newUser = {firstName, lastName, email, password}
-        console.log("Welcome " + newUser);
-        setHasSubmittedForm(true);
-    }
-    function formMessage(){
-        if(hasSubmittedForm){
-            return "Form Submitted Successfully"
-        } else{
-            return "Submit Form"
-        }
-    }
-    function handleFirstName(){
-        if(firstName.length < 1){
-            setFirstNameError("🚫🚫🚫 First Name is required! 🚫🚫🚫");
-        } else if(firstName.length < 2){
-            setFirstNameError("🚫🚫🚫 First Name must be 2 or more characters! 🚫🚫🚫");
-        } else{
-            setFirstNameError("");
-        }
-    }
-
-    function handleLastName(){
-        if(lastName.length < 1){
-            setLastNameError("🚫🚫🚫 Last name is required! 🚫🚫🚫")
-        } else if(lastName.length < 2){
-            setLastNameError("🚫🚫🚫 Last name must be 2 or more characters! 🚫🚫🚫")
-        } else{
-            setLastNameError("");
-        }
-    }
-
-    function handleEmail(){
-        if(email.length < 1){
-            setEmailError("🚫🚫🚫 Email is required! 🚫🚫🚫")
-        } else if(email.length < 2){
-            setEmailError("🚫🚫🚫 Email must be 2 or more characters! 🚫🚫🚫")
-        } else{
-            setEmailError("");
-        }
-    }
-
-    function handlePassword(){
-        if(password.length < 1){
-            setPasswordError("🚫🚫🚫 Password is required! 🚫🚫🚫")
-        } else if(password.length < 2){
-            setPasswordError("🚫🚫🚫 Last name must be 2 or more characters! 🚫🚫🚫")
-        } else{
-            setPasswordError("");
-        }
-    }
-    function handleConfirmPassword(){
-        if(password !== confirmPassword){
-            console.log("*giggles*");
-            setConfirmPasswordError("Passwords don't match 🤔☹️  ")
-        } else{
-            setConfirmPasswordError("");
-        }
-    }
+const UserForm = (props) => {
+    const { user, setUser } = props;
+    
+    const onChange = event => {
+        const newUser = {...user};
+        newUser[event.target.name] = event.target.value;
+        setUser(newUser)
+    };
+    
     return(
-        <form onSubmit={(e) => {
-            createUser(e);
-            handleFirstName();
-            handleLastName();
-            handleEmail();
-            handlePassword();
-            handleConfirmPassword();
-            }
-        }>
-            <h3>{ formMessage() }</h3>
-            <div>
-                <label>First Name: </label>
-                <input type="text" onChange={(e) => setFirstName(e.target.value)}/>
-                {
-                    firstNameError ? 
-                    <p style={{color:'red'}}>{firstNameError}</p> :
-                    ''
-                }
+        <div className="container">
+        <div className="row">
+            <div className="input-group mb-3">
+            <span className="input-group-text">First name</span>
+            <input type="text" className="form-control" placeholder="First Name" name="firstName" onChange={ onChange } />
             </div>
-            <div>
-                <label>Last Name: </label>
-                <input type="text" onChange={(e) => setLastName(e.target.value)}/>
-                {
-                    lastNameError ? 
-                    <p style={{color:'red'}}>{lastNameError}</p> :
-                    ''
-                }
+        </div>
+        <div className="row">
+            <div className="input-group mb-3">
+            <span className="input-group-text">Last name</span>
+            <input type="text" className="form-control" placeholder="Last Name" name="lastName" onChange={ onChange } />
             </div>
-            <div>
-                <label>Email: </label>
-                <input type="email" onChange={(e) => setEmail(e.target.value)}/>
-                {
-                    emailError ? 
-                    <p style={{color:'red'}}>{emailError}</p> :
-                    ''
-                }
+        </div>
+        <div className="row">
+            <div className="input-group mb-3">
+            <span className="input-group-text">Email</span>
+            <input type="text" className="form-control" placeholder="Email" name="email" onChange={ onChange } />
             </div>
-            <div>
-                <label>Password: </label>
-                <input type="password" onChange={(e) => setPassword(e.target.value)}/>
-                {
-                    passwordError ? 
-                    <p style={{color:'red'}}>{passwordError}</p> :
-                    ''
-                }
-                {
-                    confirmPasswordError ? 
-                    <p style={{color:'red'}}>{confirmPasswordError}</p> :
-                    ''
-                }
+        </div>
+        <div className="row">
+            <div className="input-group mb-3">
+            <span className="input-group-text">Password</span>
+            <input type="password" className="form-control" placeholder="Password" name="password" onChange={ onChange } />
             </div>
-            <div>
-                <label>Confirm Password: </label>
-                <input type="password" onChange={(e) => setConfirmPassword(e.target.value)}/>
+        </div>
+        <div className="row">
+            <div className="input-group mb-3">
+            <span className="input-group-text">Confirm Password</span>
+            <input type="password" className="form-control" placeholder="Confirm Password" name="confirmPassword" onChange={ onChange } />
             </div>
-            <input type="submit" value="Submit the form"/>
-            <div>
-                <p>First Name: {firstName}</p>
-                <p>Last Name: {lastName}</p>
-                <p>Email: {email}</p>
-                <p>Password: {password}</p>
-                <p>Confirm Password: {confirmPassword}</p>
-            </div>
-        </form>
-    )
-}
-
+        </div>
+        </div>
+    );
+};
 
 export default UserForm;
